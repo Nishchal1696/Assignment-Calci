@@ -1,17 +1,31 @@
 package com.calc.demo.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.calc.demo.operations.Operartions;
+import com.calc.demo.util.NumbersToBeMinMax;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @RestController
 @RequestMapping("/calculatorapi/v1")
 public class OperationController {
+	
+	ArrayList<Integer> list;
 	@Autowired
 	Operartions operartions;
 	
@@ -64,6 +78,21 @@ public class OperationController {
 		int result= operartions.doFactorial(a);
 		return "Result "+ result;
 	}
+	
+	@PostMapping("/minmax")
+	@ResponseBody
+public String findMinMax(@RequestBody NumbersToBeMinMax numberList) {
+		
+		int min=0;
+		int max=0;
+		
+		List<Integer> list=new ArrayList<>();
+		for(Integer i: numberList.getNumbersToBeMinMax()) {
+			list.add(i);
+		}
+String result=operartions.getMinMax(list, min, max);
+	return result;
+}
 	
 
 }

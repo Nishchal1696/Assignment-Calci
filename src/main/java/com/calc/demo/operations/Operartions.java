@@ -1,5 +1,9 @@
 package com.calc.demo.operations;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,5 +35,11 @@ public class Operartions {
 	        for (i = 2; i <= a; i++) 
 	            res *= i; 
 	        return res; 
+	}
+	
+	public String getMinMax(List<Integer> list,int min, int max) {
+		min=Collections.min(list);
+		max=Collections.max(list);
+		return"Min=" +min+", Max="+max;
 	}
 }
